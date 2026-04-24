@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 antialiased;
+}
+
+button,
+[role="button"] {
+  @apply cursor-pointer;
+}
+
+@layer components {
+  .surface-card {
+    @apply rounded-2xl border border-slate-200 bg-white shadow-sm;
+  }
+
+  .icon-badge {
+    @apply inline-flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-700;
+  }
+
+  .btn-primary {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2 font-medium text-white transition hover:bg-blue-700;
+  }
+
+  .btn-secondary {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 font-medium text-slate-700 transition hover:bg-slate-100;
+  }
+
+  .badge-soft {
+    @apply rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700;
+  }
+}
