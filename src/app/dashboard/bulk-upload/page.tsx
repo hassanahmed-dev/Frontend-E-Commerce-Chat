@@ -7,7 +7,8 @@ import { useAuth } from "@/lib/auth";
 
 export default function BulkUploadPage() {
   const { token } = useAuth();
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL ?? `${apiUrl}/graphql`;
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -18,7 +19,7 @@ export default function BulkUploadPage() {
   );
 
   const callGraphql = async (query: string, variables: Record<string, unknown>) => {
-    const response = await fetch(`${apiUrl}/graphql`, {
+    const response = await fetch(graphqlUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

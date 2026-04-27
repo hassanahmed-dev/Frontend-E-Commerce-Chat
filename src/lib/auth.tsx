@@ -24,7 +24,8 @@ interface AuthContextValue {
 
 const STORAGE_KEY = "shopnest_auth_user";
 const TOKEN_KEY = "shopnest_auth_token";
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+const GRAPHQL_URL = process.env.NEXT_PUBLIC_GRAPHQL_URL ?? `${API_URL}/graphql`;
 const AUTH_TOKEN_COOKIE = "shopnest_token";
 const AUTH_ROLE_COOKIE = "shopnest_role";
 
@@ -87,7 +88,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const requestAuth = async (query: string, variables: Record<string, unknown>) => {
-    const response = await fetch(`${API_URL}/graphql`, {
+    const response = await fetch(GRAPHQL_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ query, variables })

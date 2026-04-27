@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const adminRoutes = ["/admin", "/dashboard", "/products", "/bulk-upload"];
+const adminRoutes = ["/admin", "/dashboard", "/products", "/bulk-upload", "/chat"];
 const userRoutes = ["/shop", "/wishlist", "/cart", "/checkout", "/account", "/product"];
 const authRoutes = ["/login", "/signup"];
 
