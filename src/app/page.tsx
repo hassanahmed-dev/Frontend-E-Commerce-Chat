@@ -162,7 +162,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="surface-card flex flex-col items-start justify-between gap-4 p-6 md:flex-row md:items-center">
+        {/* <section className="surface-card flex flex-col items-start justify-between gap-4 p-6 md:flex-row md:items-center">
           <motion.h1
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -173,7 +173,7 @@ export default function HomePage() {
           <Link href="/account" className="btn-primary">
             Create account
           </Link>
-        </section>
+        </section> */}
       </main>
     </div>
   );

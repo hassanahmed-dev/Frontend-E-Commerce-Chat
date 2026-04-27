@@ -14,7 +14,9 @@ interface AuthUser {
 interface AuthContextValue {
   user: AuthUser | null;
   token: string | null;
+  isReady: boolean;
   isAuthenticated: boolean;
+  updateProfile: (payload: { name: string; email: string }) => void;
   login: (payload: { email: string; password: string }) => Promise<AuthUser>;
   signup: (payload: { name: string; email: string; password: string }) => Promise<AuthUser>;
   logout: () => void;
@@ -31,6 +33,7 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     const rawUser = window.localStorage.getItem(STORAGE_KEY);
@@ -61,6 +64,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // no-op
       }
     }
+    setIsReady(true);
   }, []);
 
   const setAuthCookies = (nextToken: string, role: Role) => {
@@ -105,7 +109,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     () => ({
       user,
       token,
-      isAuthenticated: Boolean(user),
+      isReady,
+      isAuthenticated: Boolean(user && token),
+      updateProfile: ({ name, email }) => {
+        if (!user) return;
+        const nextUser: AuthUser = { ...user, name, email };
+        setUser(nextUser);
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextUser));
+      },
       login: async ({ email, password }) => {
         const data = await requestAuth(
           `mutation Login($input: LoginInput!) {
@@ -146,7 +157,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         clearAuthCookies();
       }
     }),
-    [user, token]
+    [isReady, user, token]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

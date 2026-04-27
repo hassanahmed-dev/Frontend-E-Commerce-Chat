@@ -11,15 +11,15 @@ import { useState } from "react";
 const links = [
   { href: "/shop", label: "Shop", icon: RiStore2Line },
   { href: "/wishlist", label: "Wishlist", icon: FiHeart },
-  { href: "/cart", label: "Cart", icon: FiShoppingBag },
-  { href: "/account", label: "Account", icon: FiUser }
+  { href: "/cart", label: "Cart", icon: FiShoppingBag }
 ];
 
 export function Header() {
   const pathname = usePathname();
   const router = useRouter();
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, isReady, logout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const navLinks = isAuthenticated ? [...links, { href: "/account", label: "Account", icon: FiUser }] : links;
 
   const handleLogout = () => {
     logout();
@@ -35,7 +35,7 @@ export function Header() {
         </Link>
 
         <ul className="hidden items-center gap-1 md:flex">
-          {links.map(({ href, label, icon: Icon }) => (
+          {navLinks.map(({ href, label, icon: Icon }) => (
             <li key={href}>
               <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
                 <Link
@@ -61,7 +61,7 @@ export function Header() {
               className="w-56 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
             />
           </div>
-          {!isAuthenticated ? (
+          {!isReady ? null : !isAuthenticated ? (
             <>
               <Link href="/signup" className="hidden rounded-full border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 md:inline-flex">
                 SignUp
@@ -101,7 +101,7 @@ export function Header() {
             </div>
 
             <div className="grid grid-cols-2 gap-2">
-              {links.map(({ href, label, icon: Icon }) => (
+              {navLinks.map(({ href, label, icon: Icon }) => (
                 <Link
                   key={href}
                   href={href}
@@ -117,7 +117,7 @@ export function Header() {
             </div>
 
             <div className="grid grid-cols-2 gap-2">
-              {!isAuthenticated ? (
+              {!isReady ? null : !isAuthenticated ? (
                 <>
                   <Link href="/signup" onClick={() => setMobileOpen(false)} className="btn-secondary justify-center text-sm">
                     SignUp

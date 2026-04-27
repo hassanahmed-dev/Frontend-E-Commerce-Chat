@@ -7,14 +7,20 @@ import { useAuth } from "@/lib/auth";
 
 const adminLinks = [
   { href: "/dashboard", label: "Dashboard", icon: FiBarChart2 },
-  { href: "/products", label: "Products", icon: FiBox },
-  { href: "/bulk-upload", label: "Bulk Upload", icon: FiUploadCloud }
+  { href: "/dashboard/products", label: "Products", icon: FiBox },
+  { href: "/dashboard/bulk-upload", label: "Bulk Upload", icon: FiUploadCloud }
 ];
 
 export function AdminShell({ title, children }: { title: string; children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useAuth();
+  const isLinkActive = (href: string) => {
+    if (href === "/dashboard") {
+      return pathname === href;
+    }
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
 
   const handleLogout = () => {
     logout();
@@ -59,7 +65,7 @@ export function AdminShell({ title, children }: { title: string; children: React
               key={href}
               href={href}
               className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition ${
-                pathname === href
+                isLinkActive(href)
                   ? "bg-blue-600 text-white"
                   : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
               }`}

@@ -2,10 +2,63 @@
 
 :root {
   color-scheme: light;
+  --bg: #f6f8fc;
+  --text: #0f172a;
+  --card: #ffffff;
+  --card-border: #e2e8f0;
+  --card-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --ring: rgba(37, 99, 235, 0.22);
 }
 
 body {
-  @apply bg-slate-50 text-slate-900 antialiased;
+  background:
+    radial-gradient(circle at top right, rgba(37, 99, 235, 0.08), transparent 40%),
+    radial-gradient(circle at top left, rgba(14, 165, 233, 0.07), transparent 35%),
+    var(--bg);
+  color: var(--text);
+  @apply antialiased;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+* {
+  @apply border-slate-200;
+}
+
+input,
+select,
+textarea {
+  @apply transition;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--ring);
+  outline-offset: 1px;
+}
+
+::selection {
+  background: rgba(37, 99, 235, 0.16);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #eef2ff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c7d2fe;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a5b4fc;
 }
 
 button,
@@ -15,22 +68,84 @@ button,
 
 @layer components {
   .surface-card {
-    @apply rounded-2xl border border-slate-200 bg-white shadow-sm;
+    background: color-mix(in oklab, var(--card) 94%, #f8fafc 6%);
+    border-color: var(--card-border);
+    box-shadow: var(--card-shadow);
+    @apply rounded-2xl border backdrop-blur-sm;
   }
 
   .icon-badge {
-    @apply inline-flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-700;
+    @apply inline-flex h-10 w-10 items-center justify-center rounded-xl text-blue-700;
+    background: linear-gradient(145deg, #dbeafe, #e0f2fe);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
   }
 
   .btn-primary {
-    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2 font-medium text-white transition hover:bg-blue-700;
+    background: linear-gradient(135deg, var(--primary), #3b82f6);
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-2 font-medium text-white transition;
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, var(--primary-hover), #2563eb);
+    box-shadow: 0 10px 22px rgba(37, 99, 235, 0.3);
+  }
+
+  .btn-primary:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
   }
 
   .btn-secondary {
-    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 font-medium text-slate-700 transition hover:bg-slate-100;
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white/95 px-4 py-2 font-medium text-slate-700 transition;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  }
+
+  .btn-secondary:hover {
+    @apply border-slate-400 bg-slate-100 text-slate-900;
+  }
+
+  .btn-secondary:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
   }
 
   .badge-soft {
-    @apply rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700;
+    background: linear-gradient(135deg, #dbeafe, #e0f2fe);
+    @apply rounded-full border border-blue-200 px-3 py-1 text-xs font-semibold text-blue-700;
+  }
+
+  .select-clean {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.75rem;
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='%2364758b' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.7rem center;
+    background-size: 0.95rem;
+    color: #0f172a;
+    padding: 0.5rem 2.2rem 0.5rem 0.75rem;
+    line-height: 1.2;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    @apply text-sm transition;
+  }
+
+  .select-clean:hover {
+    border-color: #94a3b8;
+    background-color: #f8fafc;
+  }
+
+  .select-clean:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-color: #60a5fa;
+  }
+
+  .select-clean option {
+    background-color: #ffffff;
+    color: #0f172a;
   }
 }
