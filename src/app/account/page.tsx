@@ -1,9 +1,10 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Header } from "@/components/layout/Header";
-import { FiMapPin, FiPackage, FiUser } from "react-icons/fi";
+import { FiCalendar, FiExternalLink, FiMapPin, FiPackage, FiUser } from "react-icons/fi";
 import { useAuth } from "@/lib/auth";
 import { getOrders, type OrderNode } from "@/lib/api";
 import { useCommerceStorage } from "@/lib/commerce";
@@ -233,14 +234,25 @@ export default function AccountPage() {
               {!loadingOrders &&
                 !orderError &&
                 recentOrders.map((order) => (
-                  <p key={order.id} className="mt-2 text-sm text-slate-600">
-                    #{order.id.slice(0, 8)} - {order.status} (${order.total})
-                  </p>
+                  <Link
+                    key={order.id}
+                    href={`/orders/${order.id}`}
+                    className="mt-2 flex items-center justify-between rounded-lg border border-slate-200 bg-white px-2 py-1.5 hover:bg-slate-50"
+                  >
+                    <div>
+                      <p className="text-sm text-slate-700">#{order.id.slice(0, 8)}</p>
+                      <p className="text-xs text-slate-500 capitalize">{order.status} · ${Number(order.total).toFixed(2)}</p>
+                    </div>
+                    <FiExternalLink className="h-3.5 w-3.5 text-slate-400" />
+                  </Link>
                 ))}
               {!loadingOrders && !orderError && !recentOrders.length && (
                 <p className="mt-2 text-sm text-slate-600">No orders placed yet.</p>
               )}
               <p className="mt-4 text-xs text-slate-500">Total orders: {orders.length}</p>
+              <Link href="/booking" className="mt-3 flex items-center gap-1.5 text-xs text-blue-600 hover:underline">
+                <FiCalendar className="h-3 w-3" /> Book a service appointment
+              </Link>
             </article>
 
             <article className="rounded-xl border border-slate-200 bg-slate-50 p-4">

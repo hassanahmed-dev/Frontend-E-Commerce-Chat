@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { FiHeart, FiMenu, FiSearch, FiShoppingBag, FiUser, FiX } from "react-icons/fi";
+import { FiCalendar, FiHeart, FiMenu, FiSearch, FiShoppingBag, FiUser, FiX } from "react-icons/fi";
 import { RiStore2Line } from "react-icons/ri";
 import { useAuth } from "@/lib/auth";
 import { useState } from "react";
@@ -19,7 +19,9 @@ export function Header() {
   const router = useRouter();
   const { user, isAuthenticated, isReady, logout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const navLinks = isAuthenticated ? [...links, { href: "/account", label: "Account", icon: FiUser }] : links;
+  const navLinks = isAuthenticated
+    ? [...links, { href: "/booking", label: "Bookings", icon: FiCalendar }, { href: "/account", label: "Account", icon: FiUser }]
+    : links;
 
   const handleLogout = () => {
     logout();

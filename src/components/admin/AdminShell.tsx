@@ -2,11 +2,23 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { FiBarChart2, FiBox, FiLogOut, FiMessageSquare, FiUploadCloud } from "react-icons/fi";
+import {
+  FiBarChart2,
+  FiBox,
+  FiCalendar,
+  FiLogOut,
+  FiMessageSquare,
+  FiShoppingBag,
+  FiUploadCloud,
+  FiUsers
+} from "react-icons/fi";
 import { useAuth } from "@/lib/auth";
 
 const adminLinks = [
   { href: "/dashboard", label: "Dashboard", icon: FiBarChart2 },
+  { href: "/dashboard/orders", label: "Orders", icon: FiShoppingBag },
+  { href: "/dashboard/bookings", label: "Bookings", icon: FiCalendar },
+  { href: "/dashboard/users", label: "Users", icon: FiUsers },
   { href: "/dashboard/products", label: "Products", icon: FiBox },
   { href: "/dashboard/bulk-upload", label: "Bulk Upload", icon: FiUploadCloud },
   { href: "/dashboard/chats", label: "Chats", icon: FiMessageSquare }
